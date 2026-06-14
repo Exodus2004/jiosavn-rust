@@ -1,7 +1,7 @@
 use axum::response::Html;
 
 pub async fn home_handler() -> Html<&'static str> {
-    Html(r#"<!DOCTYPE html>
+    Html(r##"<!DOCTYPE html>
 <html>
   <head>
     <title>JioSaavn API (Rust)</title>
@@ -129,5 +129,5 @@ pub async fn home_handler() -> Html<&'static str> {
       </div>
     </main>
   </body>
-</html>"#)
+</html>"##)
 }
