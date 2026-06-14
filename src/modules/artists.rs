@@ -1,7 +1,7 @@
 use crate::common::helpers::{create_image_links, use_fetch};
 use crate::common::types::{ApiResponse, DownloadLink};
 use crate::modules::albums::{map_album, Album, RawAlbum};
-use crate::modules::songs::{map_song, RawSong, Song, SongArtists};
+use crate::modules::songs::{map_song, RawSong, Song};
 use axum::{
     extract::{Path, Query},
     http::StatusCode,

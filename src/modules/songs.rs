@@ -1,14 +1,13 @@
 use crate::common::helpers::{create_download_links, create_image_links, use_fetch};
 use crate::common::types::{ApiResponse, DownloadLink};
 use axum::{
-    extract::{Path, Query, State},
+    extract::{Path, Query},
     http::StatusCode,
     response::IntoResponse,
     Json,
 };
 use regex::Regex;
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
 use utoipa::{IntoParams, ToSchema};
 
 // --- Raw API Deserialization Models ---

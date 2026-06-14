@@ -3,7 +3,7 @@ use crate::common::types::{ApiResponse, DownloadLink};
 use crate::modules::songs::{map_artist_mini, ArtistMini, RawArtistMini};
 use crate::modules::songs::{map_song, RawArtistMap, RawSong, Song, SongArtists};
 use axum::{
-    extract::{Query, State},
+    extract::Query,
     http::StatusCode,
     response::IntoResponse,
     Json,
