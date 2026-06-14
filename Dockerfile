@@ -1,33 +1,31 @@
-FROM oven/bun AS base
+# Build Stage
+FROM rust:1.75-slim AS builder
 
-WORKDIR /user/app
+WORKDIR /usr/src/app
 
-COPY package.json .
+# Copy files
+COPY Cargo.toml ./
+# Create empty src/main.rs to build dependencies and cache them
+RUN mkdir src && echo "fn main() {}" > src/main.rs
+RUN cargo build --release
 
-COPY bun.lockb .
+# Copy actual source code and rebuild
+COPY src ./src
+# Update timestamp of main.rs to ensure cargo rebuilds it
+RUN touch src/main.rs
+RUN cargo build --release
 
-RUN bun install --frozen-lockfile --production
+# Run Stage
+FROM debian:bookworm-slim
 
-# Making build file
-FROM base AS build
+WORKDIR /usr/local/bin
 
-WORKDIR /user/app
+# Copy compiled binary from builder stage
+COPY --from=builder /usr/src/app/target/release/jiosaavn-api-rust ./jiosaavn-api
 
-COPY . .
+# Install certificates for HTTPS requests
+RUN apt-get update && apt-get install -y ca-certificates && rm -rf /var/lib/apt/lists/*
 
-RUN bun install --frozen-lockfile
+EXPOSE 8787
 
-RUN bun run build
-
-# Production
-FROM oven/bun:alpine AS production
-
-WORKDIR /user/app
-
-COPY --from=build /user/app/dist ./dist
-COPY --from=base /user/app/node_modules ./node_modules
-COPY --from=base /user/app/package.json ./package.json
-
-EXPOSE 3000
-
-CMD ["bun", "run", "start"]
+CMD ["./jiosaavn-api"]
