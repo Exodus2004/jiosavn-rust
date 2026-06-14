@@ -1,6 +1,6 @@
 use crate::common::helpers::{create_image_links, use_fetch};
 use crate::common::types::{ApiResponse, DownloadLink};
-use crate::modules::artists::{map_artist_mini, ArtistMini, RawArtistMini};
+use crate::modules::songs::{map_artist_mini, ArtistMini, RawArtistMini};
 use crate::modules::songs::{map_song, RawArtistMap, RawSong, Song, SongArtists};
 use axum::{
     extract::{Query, State},
@@ -150,7 +150,8 @@ pub struct RawSearchAlbumsItem {
 
 #[derive(Debug, Deserialize)]
 pub struct RawSearchAlbumsMoreInfo {
-    pub artistMap: Option<RawArtistMap>,
+    #[serde(rename = "artistMap")]
+    pub artist_map: Option<RawArtistMap>,
 }
 
 #[derive(Debug, Deserialize)]

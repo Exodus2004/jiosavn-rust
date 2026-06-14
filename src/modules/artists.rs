@@ -58,7 +58,8 @@ pub struct RawSimilarArtist {
     pub dob: Option<String>,
     pub fb: Option<String>,
     pub twitter: Option<String>,
-    pub isRadioPresent: Option<bool>,
+    #[serde(rename = "isRadioPresent")]
+    pub is_radio_present: Option<bool>,
     #[serde(rename = "type")]
     pub item_type: String,
     pub dominantType: Option<String>,
